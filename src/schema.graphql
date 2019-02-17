@@ -5,7 +5,7 @@ type Query {
 }
 
 type Mutation {
-  createMessage(text: String!, author: String!, belognsIn: String!): Message
+  createMessage(text: String!, author: String!, belongsIn: String!): Message
   deleteMessage(id: ID!): Message
   UpdateMessage(id: ID!): Message
 }
@@ -13,6 +13,6 @@ type Mutation {
 type Message {
   id: ID!
   text: String!
-  author: Sring!
+  author: String!
   belongsIn: String!
 }
