@@ -1,0 +1,18 @@
+type Query {
+  messages: [Message!]!
+  message(id: ID!): Message
+  description: String
+}
+
+type Mutation {
+  createMessage(text: String!, author: String!, belognsIn: String!): Message
+  deleteMessage(id: ID!): Message
+  UpdateMessage(id: ID!): Message
+}
+
+type Message {
+  id: ID!
+  text: String!
+  author: Sring!
+  belongsIn: String!
+}
