@@ -1,0 +1,7 @@
+type Message {
+  id: ID! @unique
+  createdAt: DateTime!
+  text: String!
+  author: String!
+  belongsIn: String!
+}
