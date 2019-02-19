@@ -1,8 +1,6 @@
-#endpoint: ''
-endpoint: http://localhost:4466
-
+endpoint: https://eu1.prisma.sh/honzamach88/msgrApp/dev
 datamodel: datamodel.prisma
 
 generate:
   - generator: javascript-client
-    output: ../src/generated/prisma-client
+    output: ../src/generated/prisma-client/

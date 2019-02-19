@@ -7,13 +7,10 @@ type BatchPayload {
   count: Long!
 }
 
-scalar DateTime
-
 scalar Long
 
 type Message {
   id: ID!
-  createdAt: DateTime!
   text: String!
   author: String!
   belongsIn: String!
@@ -39,21 +36,20 @@ type MessageEdge {
 enum MessageOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
   text_ASC
   text_DESC
   author_ASC
   author_DESC
   belongsIn_ASC
   belongsIn_DESC
+  createdAt_ASC
+  createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
 type MessagePreviousValues {
   id: ID!
-  createdAt: DateTime!
   text: String!
   author: String!
   belongsIn: String!
@@ -104,14 +100,6 @@ input MessageWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
   text: String
   text_not: String
   text_in: [String!]
