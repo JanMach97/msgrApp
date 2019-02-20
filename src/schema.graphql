@@ -13,6 +13,15 @@ type Mutation {
 type Message {
   id: ID!
   text: String!
-  author: String!
+  author: User!
   belongsIn: String!
+}
+
+type User {
+  id: ID!
+  username: String!
+  firstame: String!
+  lastname: String!
+  password: String!
+  email: String!
 }
