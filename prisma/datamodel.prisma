@@ -1,6 +1,30 @@
 type Message {
   id: ID! @unique
+  createdAt: DateTime!
   text: String!
-  author: String!
-  belongsIn: String!
+  author: User!
+  belongsIn: Channel!
+}
+
+type User {
+  id: ID! @unique
+  username: String!
+  firstame: String!
+  lastname: String!
+  password: String!
+  email: String!
+  server: [Server]!
+}
+
+type Channel {
+  id: ID! @unique
+  name: String!
+  public: Boolean!
+  belongsIn: Server!
+}
+
+type Server {
+  id: ID! @unique
+  name: String!
+  owner: User!
 }

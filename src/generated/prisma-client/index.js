@@ -5,7 +5,19 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
+    name: "Channel",
+    embedded: false
+  },
+  {
     name: "Message",
+    embedded: false
+  },
+  {
+    name: "Server",
+    embedded: false
+  },
+  {
+    name: "User",
     embedded: false
   }
 ];

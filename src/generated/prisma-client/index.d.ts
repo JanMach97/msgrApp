@@ -14,7 +14,10 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
   U[keyof U];
 
 export interface Exists {
+  channel: (where?: ChannelWhereInput) => Promise<boolean>;
   message: (where?: MessageWhereInput) => Promise<boolean>;
+  server: (where?: ServerWhereInput) => Promise<boolean>;
+  user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -36,6 +39,25 @@ export interface Prisma {
    * Queries
    */
 
+  channel: (where: ChannelWhereUniqueInput) => ChannelPromise;
+  channels: (args?: {
+    where?: ChannelWhereInput;
+    orderBy?: ChannelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Channel>;
+  channelsConnection: (args?: {
+    where?: ChannelWhereInput;
+    orderBy?: ChannelOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ChannelConnectionPromise;
   message: (where: MessageWhereUniqueInput) => MessagePromise;
   messages: (args?: {
     where?: MessageWhereInput;
@@ -55,12 +77,66 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => MessageConnectionPromise;
+  server: (where: ServerWhereUniqueInput) => ServerPromise;
+  servers: (args?: {
+    where?: ServerWhereInput;
+    orderBy?: ServerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Server>;
+  serversConnection: (args?: {
+    where?: ServerWhereInput;
+    orderBy?: ServerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => ServerConnectionPromise;
+  user: (where: UserWhereUniqueInput) => UserPromise;
+  users: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<User>;
+  usersConnection: (args?: {
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => UserConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
+  createChannel: (data: ChannelCreateInput) => ChannelPromise;
+  updateChannel: (args: {
+    data: ChannelUpdateInput;
+    where: ChannelWhereUniqueInput;
+  }) => ChannelPromise;
+  updateManyChannels: (args: {
+    data: ChannelUpdateManyMutationInput;
+    where?: ChannelWhereInput;
+  }) => BatchPayloadPromise;
+  upsertChannel: (args: {
+    where: ChannelWhereUniqueInput;
+    create: ChannelCreateInput;
+    update: ChannelUpdateInput;
+  }) => ChannelPromise;
+  deleteChannel: (where: ChannelWhereUniqueInput) => ChannelPromise;
+  deleteManyChannels: (where?: ChannelWhereInput) => BatchPayloadPromise;
   createMessage: (data: MessageCreateInput) => MessagePromise;
   updateMessage: (args: {
     data: MessageUpdateInput;
@@ -77,6 +153,38 @@ export interface Prisma {
   }) => MessagePromise;
   deleteMessage: (where: MessageWhereUniqueInput) => MessagePromise;
   deleteManyMessages: (where?: MessageWhereInput) => BatchPayloadPromise;
+  createServer: (data: ServerCreateInput) => ServerPromise;
+  updateServer: (args: {
+    data: ServerUpdateInput;
+    where: ServerWhereUniqueInput;
+  }) => ServerPromise;
+  updateManyServers: (args: {
+    data: ServerUpdateManyMutationInput;
+    where?: ServerWhereInput;
+  }) => BatchPayloadPromise;
+  upsertServer: (args: {
+    where: ServerWhereUniqueInput;
+    create: ServerCreateInput;
+    update: ServerUpdateInput;
+  }) => ServerPromise;
+  deleteServer: (where: ServerWhereUniqueInput) => ServerPromise;
+  deleteManyServers: (where?: ServerWhereInput) => BatchPayloadPromise;
+  createUser: (data: UserCreateInput) => UserPromise;
+  updateUser: (args: {
+    data: UserUpdateInput;
+    where: UserWhereUniqueInput;
+  }) => UserPromise;
+  updateManyUsers: (args: {
+    data: UserUpdateManyMutationInput;
+    where?: UserWhereInput;
+  }) => BatchPayloadPromise;
+  upsertUser: (args: {
+    where: UserWhereUniqueInput;
+    create: UserCreateInput;
+    update: UserUpdateInput;
+  }) => UserPromise;
+  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
+  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -86,9 +194,18 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  channel: (
+    where?: ChannelSubscriptionWhereInput
+  ) => ChannelSubscriptionPayloadSubscription;
   message: (
     where?: MessageSubscriptionWhereInput
   ) => MessageSubscriptionPayloadSubscription;
+  server: (
+    where?: ServerSubscriptionWhereInput
+  ) => ServerSubscriptionPayloadSubscription;
+  user: (
+    where?: UserSubscriptionWhereInput
+  ) => UserSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -99,15 +216,51 @@ export interface ClientConstructor<T> {
  * Types
  */
 
+export type ServerOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type ChannelOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "public_ASC"
+  | "public_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
 export type MessageOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
   | "text_ASC"
   | "text_DESC"
-  | "author_ASC"
-  | "author_DESC"
-  | "belongsIn_ASC"
-  | "belongsIn_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC";
+
+export type UserOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "username_ASC"
+  | "username_DESC"
+  | "firstame_ASC"
+  | "firstame_DESC"
+  | "lastname_ASC"
+  | "lastname_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "email_ASC"
+  | "email_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -115,22 +268,491 @@ export type MessageOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export interface MessageCreateInput {
-  text: String;
-  author: String;
-  belongsIn: String;
+export interface UserUpdateWithoutServerDataInput {
+  username?: String;
+  firstame?: String;
+  lastname?: String;
+  password?: String;
+  email?: String;
+}
+
+export type ChannelWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface ChannelUpdateManyMutationInput {
+  name?: String;
+  public?: Boolean;
+}
+
+export interface ServerWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  owner?: UserWhereInput;
+  AND?: ServerWhereInput[] | ServerWhereInput;
+  OR?: ServerWhereInput[] | ServerWhereInput;
+  NOT?: ServerWhereInput[] | ServerWhereInput;
+}
+
+export interface ChannelWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  public?: Boolean;
+  public_not?: Boolean;
+  belongsIn?: ServerWhereInput;
+  AND?: ChannelWhereInput[] | ChannelWhereInput;
+  OR?: ChannelWhereInput[] | ChannelWhereInput;
+  NOT?: ChannelWhereInput[] | ChannelWhereInput;
 }
 
 export interface MessageUpdateInput {
   text?: String;
-  author?: String;
-  belongsIn?: String;
+  author?: UserUpdateOneRequiredInput;
+  belongsIn?: ChannelUpdateOneRequiredInput;
+}
+
+export interface ChannelCreateInput {
+  name: String;
+  public: Boolean;
+  belongsIn: ServerCreateOneInput;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface ServerCreateOneInput {
+  create?: ServerCreateInput;
+  connect?: ServerWhereUniqueInput;
+}
+
+export interface ServerSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ServerWhereInput;
+  AND?: ServerSubscriptionWhereInput[] | ServerSubscriptionWhereInput;
+  OR?: ServerSubscriptionWhereInput[] | ServerSubscriptionWhereInput;
+  NOT?: ServerSubscriptionWhereInput[] | ServerSubscriptionWhereInput;
+}
+
+export interface ServerCreateInput {
+  name: String;
+  owner: UserCreateOneWithoutServerInput;
+}
+
+export interface ChannelSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: ChannelWhereInput;
+  AND?: ChannelSubscriptionWhereInput[] | ChannelSubscriptionWhereInput;
+  OR?: ChannelSubscriptionWhereInput[] | ChannelSubscriptionWhereInput;
+  NOT?: ChannelSubscriptionWhereInput[] | ChannelSubscriptionWhereInput;
+}
+
+export interface UserCreateOneWithoutServerInput {
+  create?: UserCreateWithoutServerInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export type MessageWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserCreateWithoutServerInput {
+  username: String;
+  firstame: String;
+  lastname: String;
+  password: String;
+  email: String;
+}
+
+export interface ServerUpdateManyMutationInput {
+  name?: String;
+}
+
+export interface ChannelUpdateInput {
+  name?: String;
+  public?: Boolean;
+  belongsIn?: ServerUpdateOneRequiredInput;
+}
+
+export interface ServerUpdateInput {
+  name?: String;
+  owner?: UserUpdateOneRequiredWithoutServerInput;
+}
+
+export interface ServerUpdateOneRequiredInput {
+  create?: ServerCreateInput;
+  update?: ServerUpdateDataInput;
+  upsert?: ServerUpsertNestedInput;
+  connect?: ServerWhereUniqueInput;
+}
+
+export interface ChannelUpsertNestedInput {
+  update: ChannelUpdateDataInput;
+  create: ChannelCreateInput;
+}
+
+export interface ServerUpdateDataInput {
+  name?: String;
+  owner?: UserUpdateOneRequiredWithoutServerInput;
+}
+
+export type ServerWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateOneRequiredWithoutServerInput {
+  create?: UserCreateWithoutServerInput;
+  update?: UserUpdateWithoutServerDataInput;
+  upsert?: UserUpsertWithoutServerInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
+}
+
+export interface ServerUpdateWithWhereUniqueWithoutOwnerInput {
+  where: ServerWhereUniqueInput;
+  data: ServerUpdateWithoutOwnerDataInput;
+}
+
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpsertWithoutServerInput {
+  update: UserUpdateWithoutServerDataInput;
+  create: UserCreateWithoutServerInput;
+}
+
+export interface ServerScalarWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  name?: String;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  AND?: ServerScalarWhereInput[] | ServerScalarWhereInput;
+  OR?: ServerScalarWhereInput[] | ServerScalarWhereInput;
+  NOT?: ServerScalarWhereInput[] | ServerScalarWhereInput;
+}
+
+export interface ServerUpsertNestedInput {
+  update: ServerUpdateDataInput;
+  create: ServerCreateInput;
+}
+
+export interface ServerUpdateWithoutOwnerDataInput {
+  name?: String;
+}
+
+export interface UserWhereInput {
+  id?: ID_Input;
+  id_not?: ID_Input;
+  id_in?: ID_Input[] | ID_Input;
+  id_not_in?: ID_Input[] | ID_Input;
+  id_lt?: ID_Input;
+  id_lte?: ID_Input;
+  id_gt?: ID_Input;
+  id_gte?: ID_Input;
+  id_contains?: ID_Input;
+  id_not_contains?: ID_Input;
+  id_starts_with?: ID_Input;
+  id_not_starts_with?: ID_Input;
+  id_ends_with?: ID_Input;
+  id_not_ends_with?: ID_Input;
+  username?: String;
+  username_not?: String;
+  username_in?: String[] | String;
+  username_not_in?: String[] | String;
+  username_lt?: String;
+  username_lte?: String;
+  username_gt?: String;
+  username_gte?: String;
+  username_contains?: String;
+  username_not_contains?: String;
+  username_starts_with?: String;
+  username_not_starts_with?: String;
+  username_ends_with?: String;
+  username_not_ends_with?: String;
+  firstame?: String;
+  firstame_not?: String;
+  firstame_in?: String[] | String;
+  firstame_not_in?: String[] | String;
+  firstame_lt?: String;
+  firstame_lte?: String;
+  firstame_gt?: String;
+  firstame_gte?: String;
+  firstame_contains?: String;
+  firstame_not_contains?: String;
+  firstame_starts_with?: String;
+  firstame_not_starts_with?: String;
+  firstame_ends_with?: String;
+  firstame_not_ends_with?: String;
+  lastname?: String;
+  lastname_not?: String;
+  lastname_in?: String[] | String;
+  lastname_not_in?: String[] | String;
+  lastname_lt?: String;
+  lastname_lte?: String;
+  lastname_gt?: String;
+  lastname_gte?: String;
+  lastname_contains?: String;
+  lastname_not_contains?: String;
+  lastname_starts_with?: String;
+  lastname_not_starts_with?: String;
+  lastname_ends_with?: String;
+  lastname_not_ends_with?: String;
+  password?: String;
+  password_not?: String;
+  password_in?: String[] | String;
+  password_not_in?: String[] | String;
+  password_lt?: String;
+  password_lte?: String;
+  password_gt?: String;
+  password_gte?: String;
+  password_contains?: String;
+  password_not_contains?: String;
+  password_starts_with?: String;
+  password_not_starts_with?: String;
+  password_ends_with?: String;
+  password_not_ends_with?: String;
+  email?: String;
+  email_not?: String;
+  email_in?: String[] | String;
+  email_not_in?: String[] | String;
+  email_lt?: String;
+  email_lte?: String;
+  email_gt?: String;
+  email_gte?: String;
+  email_contains?: String;
+  email_not_contains?: String;
+  email_starts_with?: String;
+  email_not_starts_with?: String;
+  email_ends_with?: String;
+  email_not_ends_with?: String;
+  server_every?: ServerWhereInput;
+  server_some?: ServerWhereInput;
+  server_none?: ServerWhereInput;
+  AND?: UserWhereInput[] | UserWhereInput;
+  OR?: UserWhereInput[] | UserWhereInput;
+  NOT?: UserWhereInput[] | UserWhereInput;
+}
+
+export interface MessageSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: MessageWhereInput;
+  AND?: MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput;
+  OR?: MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput;
+  NOT?: MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput;
+}
+
+export interface ServerUpdateManyWithoutOwnerInput {
+  create?: ServerCreateWithoutOwnerInput[] | ServerCreateWithoutOwnerInput;
+  delete?: ServerWhereUniqueInput[] | ServerWhereUniqueInput;
+  connect?: ServerWhereUniqueInput[] | ServerWhereUniqueInput;
+  set?: ServerWhereUniqueInput[] | ServerWhereUniqueInput;
+  disconnect?: ServerWhereUniqueInput[] | ServerWhereUniqueInput;
+  update?:
+    | ServerUpdateWithWhereUniqueWithoutOwnerInput[]
+    | ServerUpdateWithWhereUniqueWithoutOwnerInput;
+  upsert?:
+    | ServerUpsertWithWhereUniqueWithoutOwnerInput[]
+    | ServerUpsertWithWhereUniqueWithoutOwnerInput;
+  deleteMany?: ServerScalarWhereInput[] | ServerScalarWhereInput;
+  updateMany?:
+    | ServerUpdateManyWithWhereNestedInput[]
+    | ServerUpdateManyWithWhereNestedInput;
+}
+
+export interface UserUpdateInput {
+  username?: String;
+  firstame?: String;
+  lastname?: String;
+  password?: String;
+  email?: String;
+  server?: ServerUpdateManyWithoutOwnerInput;
+}
+
+export interface UserUpdateDataInput {
+  username?: String;
+  firstame?: String;
+  lastname?: String;
+  password?: String;
+  email?: String;
+  server?: ServerUpdateManyWithoutOwnerInput;
 }
 
 export interface MessageUpdateManyMutationInput {
   text?: String;
-  author?: String;
-  belongsIn?: String;
+}
+
+export interface MessageCreateInput {
+  text: String;
+  author: UserCreateOneInput;
+  belongsIn: ChannelCreateOneInput;
+}
+
+export interface ChannelUpdateOneRequiredInput {
+  create?: ChannelCreateInput;
+  update?: ChannelUpdateDataInput;
+  upsert?: ChannelUpsertNestedInput;
+  connect?: ChannelWhereUniqueInput;
+}
+
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface ServerUpdateManyWithWhereNestedInput {
+  where: ServerScalarWhereInput;
+  data: ServerUpdateManyDataInput;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+}
+
+export interface ChannelCreateOneInput {
+  create?: ChannelCreateInput;
+  connect?: ChannelWhereUniqueInput;
+}
+
+export interface ServerCreateWithoutOwnerInput {
+  name: String;
+}
+
+export interface ServerCreateManyWithoutOwnerInput {
+  create?: ServerCreateWithoutOwnerInput[] | ServerCreateWithoutOwnerInput;
+  connect?: ServerWhereUniqueInput[] | ServerWhereUniqueInput;
+}
+
+export interface UserCreateInput {
+  username: String;
+  firstame: String;
+  lastname: String;
+  password: String;
+  email: String;
+  server?: ServerCreateManyWithoutOwnerInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  username?: String;
+  firstame?: String;
+  lastname?: String;
+  password?: String;
+  email?: String;
+}
+
+export interface ServerUpsertWithWhereUniqueWithoutOwnerInput {
+  where: ServerWhereUniqueInput;
+  update: ServerUpdateWithoutOwnerDataInput;
+  create: ServerCreateWithoutOwnerInput;
+}
+
+export interface ServerUpdateManyDataInput {
+  name?: String;
+}
+
+export interface ChannelUpdateDataInput {
+  name?: String;
+  public?: Boolean;
+  belongsIn?: ServerUpdateOneRequiredInput;
 }
 
 export interface MessageWhereInput {
@@ -148,6 +770,14 @@ export interface MessageWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
+  createdAt?: DateTimeInput;
+  createdAt_not?: DateTimeInput;
+  createdAt_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_not_in?: DateTimeInput[] | DateTimeInput;
+  createdAt_lt?: DateTimeInput;
+  createdAt_lte?: DateTimeInput;
+  createdAt_gt?: DateTimeInput;
+  createdAt_gte?: DateTimeInput;
   text?: String;
   text_not?: String;
   text_in?: String[] | String;
@@ -162,72 +792,15 @@ export interface MessageWhereInput {
   text_not_starts_with?: String;
   text_ends_with?: String;
   text_not_ends_with?: String;
-  author?: String;
-  author_not?: String;
-  author_in?: String[] | String;
-  author_not_in?: String[] | String;
-  author_lt?: String;
-  author_lte?: String;
-  author_gt?: String;
-  author_gte?: String;
-  author_contains?: String;
-  author_not_contains?: String;
-  author_starts_with?: String;
-  author_not_starts_with?: String;
-  author_ends_with?: String;
-  author_not_ends_with?: String;
-  belongsIn?: String;
-  belongsIn_not?: String;
-  belongsIn_in?: String[] | String;
-  belongsIn_not_in?: String[] | String;
-  belongsIn_lt?: String;
-  belongsIn_lte?: String;
-  belongsIn_gt?: String;
-  belongsIn_gte?: String;
-  belongsIn_contains?: String;
-  belongsIn_not_contains?: String;
-  belongsIn_starts_with?: String;
-  belongsIn_not_starts_with?: String;
-  belongsIn_ends_with?: String;
-  belongsIn_not_ends_with?: String;
+  author?: UserWhereInput;
+  belongsIn?: ChannelWhereInput;
   AND?: MessageWhereInput[] | MessageWhereInput;
   OR?: MessageWhereInput[] | MessageWhereInput;
   NOT?: MessageWhereInput[] | MessageWhereInput;
 }
 
-export interface MessageSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: MessageWhereInput;
-  AND?: MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput;
-  OR?: MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput;
-  NOT?: MessageSubscriptionWhereInput[] | MessageSubscriptionWhereInput;
-}
-
-export type MessageWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
 export interface NodeNode {
   id: ID_Output;
-}
-
-export interface AggregateMessage {
-  count: Int;
-}
-
-export interface AggregateMessagePromise
-  extends Promise<AggregateMessage>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateMessageSubscription
-  extends Promise<AsyncIterator<AggregateMessage>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BatchPayload {
@@ -246,29 +819,325 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface MessagePreviousValues {
+export interface UserPreviousValues {
   id: ID_Output;
-  text: String;
-  author: String;
-  belongsIn: String;
+  username: String;
+  firstame: String;
+  lastname: String;
+  password: String;
+  email: String;
 }
 
-export interface MessagePreviousValuesPromise
-  extends Promise<MessagePreviousValues>,
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  author: () => Promise<String>;
-  belongsIn: () => Promise<String>;
+  username: () => Promise<String>;
+  firstame: () => Promise<String>;
+  lastname: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
 }
 
-export interface MessagePreviousValuesSubscription
-  extends Promise<AsyncIterator<MessagePreviousValues>>,
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  firstame: () => Promise<AsyncIterator<String>>;
+  lastname: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Message {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  text: String;
+}
+
+export interface MessagePromise extends Promise<Message>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  text: () => Promise<String>;
+  author: <T = UserPromise>() => T;
+  belongsIn: <T = ChannelPromise>() => T;
+}
+
+export interface MessageSubscription
+  extends Promise<AsyncIterator<Message>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   text: () => Promise<AsyncIterator<String>>;
-  author: () => Promise<AsyncIterator<String>>;
-  belongsIn: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
+  belongsIn: <T = ChannelSubscription>() => T;
+}
+
+export interface User {
+  id: ID_Output;
+  username: String;
+  firstame: String;
+  lastname: String;
+  password: String;
+  email: String;
+}
+
+export interface UserPromise extends Promise<User>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  username: () => Promise<String>;
+  firstame: () => Promise<String>;
+  lastname: () => Promise<String>;
+  password: () => Promise<String>;
+  email: () => Promise<String>;
+  server: <T = FragmentableArray<Server>>(args?: {
+    where?: ServerWhereInput;
+    orderBy?: ServerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface UserSubscription
+  extends Promise<AsyncIterator<User>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  username: () => Promise<AsyncIterator<String>>;
+  firstame: () => Promise<AsyncIterator<String>>;
+  lastname: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  email: () => Promise<AsyncIterator<String>>;
+  server: <T = Promise<AsyncIterator<ServerSubscription>>>(args?: {
+    where?: ServerWhereInput;
+    orderBy?: ServerOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface ServerPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ServerPreviousValuesPromise
+  extends Promise<ServerPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ServerPreviousValuesSubscription
+  extends Promise<AsyncIterator<ServerPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ChannelConnection {
+  pageInfo: PageInfo;
+  edges: ChannelEdge[];
+}
+
+export interface ChannelConnectionPromise
+  extends Promise<ChannelConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ChannelEdge>>() => T;
+  aggregate: <T = AggregateChannelPromise>() => T;
+}
+
+export interface ChannelConnectionSubscription
+  extends Promise<AsyncIterator<ChannelConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ChannelEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateChannelSubscription>() => T;
+}
+
+export interface ServerSubscriptionPayload {
+  mutation: MutationType;
+  node: Server;
+  updatedFields: String[];
+  previousValues: ServerPreviousValues;
+}
+
+export interface ServerSubscriptionPayloadPromise
+  extends Promise<ServerSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ServerPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ServerPreviousValuesPromise>() => T;
+}
+
+export interface ServerSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ServerSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ServerSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ServerPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateChannel {
+  count: Int;
+}
+
+export interface AggregateChannelPromise
+  extends Promise<AggregateChannel>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateChannelSubscription
+  extends Promise<AsyncIterator<AggregateChannel>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface ChannelEdge {
+  node: Channel;
+  cursor: String;
+}
+
+export interface ChannelEdgePromise extends Promise<ChannelEdge>, Fragmentable {
+  node: <T = ChannelPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ChannelEdgeSubscription
+  extends Promise<AsyncIterator<ChannelEdge>>,
+    Fragmentable {
+  node: <T = ChannelSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateServer {
+  count: Int;
+}
+
+export interface AggregateServerPromise
+  extends Promise<AggregateServer>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateServerSubscription
+  extends Promise<AsyncIterator<AggregateServer>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Channel {
+  id: ID_Output;
+  name: String;
+  public: Boolean;
+}
+
+export interface ChannelPromise extends Promise<Channel>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  public: () => Promise<Boolean>;
+  belongsIn: <T = ServerPromise>() => T;
+}
+
+export interface ChannelSubscription
+  extends Promise<AsyncIterator<Channel>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  public: () => Promise<AsyncIterator<Boolean>>;
+  belongsIn: <T = ServerSubscription>() => T;
+}
+
+export interface ServerConnection {
+  pageInfo: PageInfo;
+  edges: ServerEdge[];
+}
+
+export interface ServerConnectionPromise
+  extends Promise<ServerConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ServerEdge>>() => T;
+  aggregate: <T = AggregateServerPromise>() => T;
+}
+
+export interface ServerConnectionSubscription
+  extends Promise<AsyncIterator<ServerConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ServerEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateServerSubscription>() => T;
+}
+
+export interface ChannelSubscriptionPayload {
+  mutation: MutationType;
+  node: Channel;
+  updatedFields: String[];
+  previousValues: ChannelPreviousValues;
+}
+
+export interface ChannelSubscriptionPayloadPromise
+  extends Promise<ChannelSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ChannelPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ChannelPreviousValuesPromise>() => T;
+}
+
+export interface ChannelSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ChannelSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ChannelSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ChannelPreviousValuesSubscription>() => T;
 }
 
 export interface MessageEdge {
@@ -286,6 +1155,47 @@ export interface MessageEdgeSubscription
     Fragmentable {
   node: <T = MessageSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Server {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ServerPromise extends Promise<Server>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  owner: <T = UserPromise>() => T;
+}
+
+export interface ServerSubscription
+  extends Promise<AsyncIterator<Server>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  owner: <T = UserSubscription>() => T;
+}
+
+export interface MessagePreviousValues {
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  text: String;
+}
+
+export interface MessagePreviousValuesPromise
+  extends Promise<MessagePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  text: () => Promise<String>;
+}
+
+export interface MessagePreviousValuesSubscription
+  extends Promise<AsyncIterator<MessagePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  text: () => Promise<AsyncIterator<String>>;
 }
 
 export interface MessageSubscriptionPayload {
@@ -313,50 +1223,6 @@ export interface MessageSubscriptionPayloadSubscription
   previousValues: <T = MessagePreviousValuesSubscription>() => T;
 }
 
-export interface Message {
-  id: ID_Output;
-  text: String;
-  author: String;
-  belongsIn: String;
-}
-
-export interface MessagePromise extends Promise<Message>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  text: () => Promise<String>;
-  author: () => Promise<String>;
-  belongsIn: () => Promise<String>;
-}
-
-export interface MessageSubscription
-  extends Promise<AsyncIterator<Message>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  text: () => Promise<AsyncIterator<String>>;
-  author: () => Promise<AsyncIterator<String>>;
-  belongsIn: () => Promise<AsyncIterator<String>>;
-}
-
-export interface MessageConnection {
-  pageInfo: PageInfo;
-  edges: MessageEdge[];
-}
-
-export interface MessageConnectionPromise
-  extends Promise<MessageConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<MessageEdge>>() => T;
-  aggregate: <T = AggregateMessagePromise>() => T;
-}
-
-export interface MessageConnectionSubscription
-  extends Promise<AsyncIterator<MessageConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<MessageEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateMessageSubscription>() => T;
-}
-
 export interface PageInfo {
   hasNextPage: Boolean;
   hasPreviousPage: Boolean;
@@ -380,10 +1246,123 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
+export interface ChannelPreviousValues {
+  id: ID_Output;
+  name: String;
+  public: Boolean;
+}
+
+export interface ChannelPreviousValuesPromise
+  extends Promise<ChannelPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  public: () => Promise<Boolean>;
+}
+
+export interface ChannelPreviousValuesSubscription
+  extends Promise<AsyncIterator<ChannelPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  public: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface MessageConnection {
+  pageInfo: PageInfo;
+  edges: MessageEdge[];
+}
+
+export interface MessageConnectionPromise
+  extends Promise<MessageConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<MessageEdge>>() => T;
+  aggregate: <T = AggregateMessagePromise>() => T;
+}
+
+export interface MessageConnectionSubscription
+  extends Promise<AsyncIterator<MessageConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<MessageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateMessageSubscription>() => T;
+}
+
+export interface AggregateMessage {
+  count: Int;
+}
+
+export interface AggregateMessagePromise
+  extends Promise<AggregateMessage>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateMessageSubscription
+  extends Promise<AsyncIterator<AggregateMessage>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ServerEdge {
+  node: Server;
+  cursor: String;
+}
+
+export interface ServerEdgePromise extends Promise<ServerEdge>, Fragmentable {
+  node: <T = ServerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ServerEdgeSubscription
+  extends Promise<AsyncIterator<ServerEdge>>,
+    Fragmentable {
+  node: <T = ServerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
 
 export type Long = string;
 
@@ -394,14 +1373,29 @@ export type ID_Input = string | number;
 export type ID_Output = string;
 
 /*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type Int = number;
+export type String = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+/*
+DateTime scalar input type, allowing Date
+*/
+export type DateTimeInput = Date | string;
+
+/*
+DateTime scalar output type, which is always a string
+*/
+export type DateTimeOutput = string;
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number;
 
 /**
  * Model Metadata
@@ -409,7 +1403,19 @@ export type Boolean = boolean;
 
 export const models: Model[] = [
   {
+    name: "Channel",
+    embedded: false
+  },
+  {
     name: "Message",
+    embedded: false
+  },
+  {
+    name: "Server",
+    embedded: false
+  },
+  {
+    name: "User",
     embedded: false
   }
 ];
