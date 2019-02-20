@@ -24,10 +24,18 @@ type User {
   lastname: String!
   password: String!
   email: String!
+  server: [Server]!
 }
 
 type Channel {
   id: ID!
   name: String!
   public: boolean!
+  belongsIn: Server!
+}
+
+type Server {
+  id: ID!
+  name: String!
+  owner: User!
 }
