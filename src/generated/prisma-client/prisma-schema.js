@@ -552,7 +552,7 @@ type Subscription {
 type User {
   id: ID!
   username: String!
-  firstame: String!
+  firstname: String!
   lastname: String!
   password: String!
   email: String!
@@ -567,7 +567,7 @@ type UserConnection {
 
 input UserCreateInput {
   username: String!
-  firstame: String!
+  firstname: String!
   lastname: String!
   password: String!
   email: String!
@@ -586,7 +586,7 @@ input UserCreateOneWithoutServerInput {
 
 input UserCreateWithoutServerInput {
   username: String!
-  firstame: String!
+  firstname: String!
   lastname: String!
   password: String!
   email: String!
@@ -602,8 +602,8 @@ enum UserOrderByInput {
   id_DESC
   username_ASC
   username_DESC
-  firstame_ASC
-  firstame_DESC
+  firstname_ASC
+  firstname_DESC
   lastname_ASC
   lastname_DESC
   password_ASC
@@ -619,7 +619,7 @@ enum UserOrderByInput {
 type UserPreviousValues {
   id: ID!
   username: String!
-  firstame: String!
+  firstname: String!
   lastname: String!
   password: String!
   email: String!
@@ -645,7 +645,7 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateDataInput {
   username: String
-  firstame: String
+  firstname: String
   lastname: String
   password: String
   email: String
@@ -654,7 +654,7 @@ input UserUpdateDataInput {
 
 input UserUpdateInput {
   username: String
-  firstame: String
+  firstname: String
   lastname: String
   password: String
   email: String
@@ -663,7 +663,7 @@ input UserUpdateInput {
 
 input UserUpdateManyMutationInput {
   username: String
-  firstame: String
+  firstname: String
   lastname: String
   password: String
   email: String
@@ -685,7 +685,7 @@ input UserUpdateOneRequiredWithoutServerInput {
 
 input UserUpdateWithoutServerDataInput {
   username: String
-  firstame: String
+  firstname: String
   lastname: String
   password: String
   email: String
@@ -730,20 +730,20 @@ input UserWhereInput {
   username_not_starts_with: String
   username_ends_with: String
   username_not_ends_with: String
-  firstame: String
-  firstame_not: String
-  firstame_in: [String!]
-  firstame_not_in: [String!]
-  firstame_lt: String
-  firstame_lte: String
-  firstame_gt: String
-  firstame_gte: String
-  firstame_contains: String
-  firstame_not_contains: String
-  firstame_starts_with: String
-  firstame_not_starts_with: String
-  firstame_ends_with: String
-  firstame_not_ends_with: String
+  firstname: String
+  firstname_not: String
+  firstname_in: [String!]
+  firstname_not_in: [String!]
+  firstname_lt: String
+  firstname_lte: String
+  firstname_gt: String
+  firstname_gte: String
+  firstname_contains: String
+  firstname_not_contains: String
+  firstname_starts_with: String
+  firstname_not_starts_with: String
+  firstname_ends_with: String
+  firstname_not_ends_with: String
   lastname: String
   lastname_not: String
   lastname_in: [String!]

@@ -9,11 +9,11 @@ type Message {
 type User {
   id: ID! @unique
   username: String!
-  firstame: String!
+  firstname: String!
   lastname: String!
   password: String!
   email: String!
-  server: [Server]!
+  server: [Server]
 }
 
 type Channel {

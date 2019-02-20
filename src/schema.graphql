@@ -8,7 +8,7 @@ type Mutation {
   createMessage(text: String!, author: String!, belongsIn: String!): Message
   deleteMessage(id: ID!): Message
   UpdateMessage(id: ID!): Message
-  signup(email: String!, password: String!, firstname: String!, lastname: String!): AuthPayload
+  signup(email: String!, password: String!, firstname: String!, lastname: String!, username: String!): AuthPayload
   login(email:String!, password: String!): AuthPayload
 }
 
@@ -27,17 +27,17 @@ type AuthPayload {
 type User {
   id: ID!
   username: String!
-  firstame: String!
+  firstname: String!
   lastname: String!
   password: String!
   email: String!
-  server: [Server]!
+  server: [Server]
 }
 
 type Channel {
   id: ID!
   name: String!
-  public: boolean!
+  public: Boolean!
   belongsIn: Server!
 }
 

@@ -253,8 +253,8 @@ export type UserOrderByInput =
   | "id_DESC"
   | "username_ASC"
   | "username_DESC"
-  | "firstame_ASC"
-  | "firstame_DESC"
+  | "firstname_ASC"
+  | "firstname_DESC"
   | "lastname_ASC"
   | "lastname_DESC"
   | "password_ASC"
@@ -270,7 +270,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface UserUpdateWithoutServerDataInput {
   username?: String;
-  firstame?: String;
+  firstname?: String;
   lastname?: String;
   password?: String;
   email?: String;
@@ -419,7 +419,7 @@ export type MessageWhereUniqueInput = AtLeastOne<{
 
 export interface UserCreateWithoutServerInput {
   username: String;
-  firstame: String;
+  firstname: String;
   lastname: String;
   password: String;
   email: String;
@@ -559,20 +559,20 @@ export interface UserWhereInput {
   username_not_starts_with?: String;
   username_ends_with?: String;
   username_not_ends_with?: String;
-  firstame?: String;
-  firstame_not?: String;
-  firstame_in?: String[] | String;
-  firstame_not_in?: String[] | String;
-  firstame_lt?: String;
-  firstame_lte?: String;
-  firstame_gt?: String;
-  firstame_gte?: String;
-  firstame_contains?: String;
-  firstame_not_contains?: String;
-  firstame_starts_with?: String;
-  firstame_not_starts_with?: String;
-  firstame_ends_with?: String;
-  firstame_not_ends_with?: String;
+  firstname?: String;
+  firstname_not?: String;
+  firstname_in?: String[] | String;
+  firstname_not_in?: String[] | String;
+  firstname_lt?: String;
+  firstname_lte?: String;
+  firstname_gt?: String;
+  firstname_gte?: String;
+  firstname_contains?: String;
+  firstname_not_contains?: String;
+  firstname_starts_with?: String;
+  firstname_not_starts_with?: String;
+  firstname_ends_with?: String;
+  firstname_not_ends_with?: String;
   lastname?: String;
   lastname_not?: String;
   lastname_in?: String[] | String;
@@ -654,7 +654,7 @@ export interface ServerUpdateManyWithoutOwnerInput {
 
 export interface UserUpdateInput {
   username?: String;
-  firstame?: String;
+  firstname?: String;
   lastname?: String;
   password?: String;
   email?: String;
@@ -663,7 +663,7 @@ export interface UserUpdateInput {
 
 export interface UserUpdateDataInput {
   username?: String;
-  firstame?: String;
+  firstname?: String;
   lastname?: String;
   password?: String;
   email?: String;
@@ -724,7 +724,7 @@ export interface ServerCreateManyWithoutOwnerInput {
 
 export interface UserCreateInput {
   username: String;
-  firstame: String;
+  firstname: String;
   lastname: String;
   password: String;
   email: String;
@@ -733,7 +733,7 @@ export interface UserCreateInput {
 
 export interface UserUpdateManyMutationInput {
   username?: String;
-  firstame?: String;
+  firstname?: String;
   lastname?: String;
   password?: String;
   email?: String;
@@ -822,7 +822,7 @@ export interface BatchPayloadSubscription
 export interface UserPreviousValues {
   id: ID_Output;
   username: String;
-  firstame: String;
+  firstname: String;
   lastname: String;
   password: String;
   email: String;
@@ -833,7 +833,7 @@ export interface UserPreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   username: () => Promise<String>;
-  firstame: () => Promise<String>;
+  firstname: () => Promise<String>;
   lastname: () => Promise<String>;
   password: () => Promise<String>;
   email: () => Promise<String>;
@@ -844,7 +844,7 @@ export interface UserPreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   username: () => Promise<AsyncIterator<String>>;
-  firstame: () => Promise<AsyncIterator<String>>;
+  firstname: () => Promise<AsyncIterator<String>>;
   lastname: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
@@ -877,7 +877,7 @@ export interface MessageSubscription
 export interface User {
   id: ID_Output;
   username: String;
-  firstame: String;
+  firstname: String;
   lastname: String;
   password: String;
   email: String;
@@ -886,7 +886,7 @@ export interface User {
 export interface UserPromise extends Promise<User>, Fragmentable {
   id: () => Promise<ID_Output>;
   username: () => Promise<String>;
-  firstame: () => Promise<String>;
+  firstname: () => Promise<String>;
   lastname: () => Promise<String>;
   password: () => Promise<String>;
   email: () => Promise<String>;
@@ -906,7 +906,7 @@ export interface UserSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   username: () => Promise<AsyncIterator<String>>;
-  firstame: () => Promise<AsyncIterator<String>>;
+  firstname: () => Promise<AsyncIterator<String>>;
   lastname: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
