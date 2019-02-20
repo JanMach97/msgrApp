@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/JanMach97/msgrApp#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "graphql-yoga": "^1.17.4",
+    "jsonwebtoken": "^8.4.0",
     "prisma-client-lib": "^1.26.6"
   }
 }
