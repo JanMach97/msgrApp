@@ -14,7 +14,7 @@ type Message {
   id: ID!
   text: String!
   author: User!
-  belongsIn: String!
+  belongsIn: Channel!
 }
 
 type User {
@@ -24,4 +24,10 @@ type User {
   lastname: String!
   password: String!
   email: String!
+}
+
+type Channel {
+  id: ID!
+  name: String!
+  public: boolean!
 }
