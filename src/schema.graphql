@@ -8,6 +8,8 @@ type Mutation {
   createMessage(text: String!, author: String!, belongsIn: String!): Message
   deleteMessage(id: ID!): Message
   UpdateMessage(id: ID!): Message
+  signup(email: String!, password: String!, firstname: String!, lastname: String!): AuthPayload
+  login(email:String!, password: String!): AuthPayload
 }
 
 type Message {
@@ -15,6 +17,11 @@ type Message {
   text: String!
   author: User!
   belongsIn: Channel!
+}
+
+type AuthPayload {
+  token: String
+  user: User
 }
 
 type User {
